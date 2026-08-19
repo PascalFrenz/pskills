@@ -38,5 +38,21 @@
   {
     "sourceUrl": "https://github.com/cursor/plugins/blob/main/pstack/skills/principle-prove-it-works/SKILL.md",
     "targetPath": "skills/principle-prove-it-works/SKILL.md"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/blob/main/pstack/skills/unslop/SKILL.md",
+    "targetPath": "skills/unslop/SKILL.md"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/blob/main/pstack/skills/why/SKILL.md",
+    "targetPath": "skills/why/SKILL.md"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/blob/main/pstack/skills/how/SKILL.md",
+    "targetPath": "skills/how/SKILL.md"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/blob/main/pstack/skills/teach/SKILL.md",
+    "targetPath": "skills/teach/SKILL.md"
   }
 ]
