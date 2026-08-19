@@ -1,0 +1,42 @@
+[
+  {
+    "sourceUrl": "https://github.com/mattpocock/skills/tree/main/skills/engineering/diagnosing-bugs",
+    "targetPath": "skills/diagnosing-bugs"
+  },
+  {
+    "sourceUrl": "https://github.com/mattpocock/skills/tree/main/skills/engineering/code-review",
+    "targetPath": "skills/code-review"
+  },
+  {
+    "sourceUrl": "https://github.com/mattpocock/skills/tree/main/skills/engineering/domain-modeling",
+    "targetPath": "skills/domain-modeling"
+  },
+  {
+    "sourceUrl": "https://github.com/mattpocock/skills/tree/main/skills/engineering/codebase-design",
+    "targetPath": "skills/codebase-design"
+  },
+  {
+    "sourceUrl": "https://github.com/mattpocock/skills/tree/main/skills/engineering/resolving-merge-conflicts",
+    "targetPath": "skills/resolving-merge-conflicts"
+  },
+  {
+    "sourceUrl": "https://github.com/mattpocock/skills/tree/main/skills/productivity/writing-for-agents",
+    "targetPath": "skills/writing-for-agents"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/blast-radius",
+    "targetPath": "skills/blast-radius"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/technical-writing",
+    "targetPath": "skills/technical-writing"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/blob/main/pstack/skills/principle-fix-root-causes/SKILL.md",
+    "targetPath": "skills/principle-fix-root-causes/SKILL.md"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/blob/main/pstack/skills/principle-prove-it-works/SKILL.md",
+    "targetPath": "skills/principle-prove-it-works/SKILL.md"
+  }
+]

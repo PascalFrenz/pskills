@@ -1,0 +1,3 @@
+# Vendored skills are fetched byte-for-byte from upstream; keep them LF so a
+# CRLF checkout never reports a false change against the upstream file.
+* text=auto eol=lf

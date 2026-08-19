@@ -1,0 +1,34 @@
+{
+  "name": "pascalfrenz",
+  "owner": {
+    "name": "Pascal Frenz",
+    "email": "pascal.frenz@hlag.com"
+  },
+  "metadata": {
+    "description": "Pascal Frenz's personal Copilot plugins",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "pskills",
+      "description": "Curated agent skills for backend engineering: debugging prod incidents, reviewing diffs, sharpening a domain model, and writing docs an agent can follow. Vendored from upstream skill repositories.",
+      "version": "0.1.0",
+      "source": ".",
+      "author": {
+        "name": "Pascal Frenz",
+        "url": "https://github.com/PascalFrenz"
+      },
+      "homepage": "https://github.com/PascalFrenz/pskills",
+      "repository": "https://github.com/PascalFrenz/pskills",
+      "keywords": [
+        "debugging",
+        "code-review",
+        "domain-modeling",
+        "technical-writing",
+        "backend"
+      ],
+      "category": "engineering",
+      "skills": "skills/"
+    }
+  ]
+}
