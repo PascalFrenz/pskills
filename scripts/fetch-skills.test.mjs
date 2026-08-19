@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { describe, it } from "node:test";
 
@@ -221,5 +221,43 @@ describe("plugin manifest", () => {
         `${entry.targetPath} is outside ${skillsDir}/ and would not ship with the plugin`,
       );
     }
+  });
+});
+
+describe("original skills", () => {
+  it("never lets a config entry claim the whole skills directory", async () => {
+    const plugin = await readJson("plugin.json");
+    const skillsDir = plugin.skills.replace(/\/$/, "");
+    const entries = validateConfig(await readJson("skills.config.json"));
+
+    for (const entry of entries) {
+      assert.notEqual(
+        entry.targetPath,
+        skillsDir,
+        `a directory target of "${skillsDir}" is vendor-owned and would prune hand-written skills`,
+      );
+    }
+  });
+
+  it("leaves hand-written skills outside every vendored target", async () => {
+    const plugin = await readJson("plugin.json");
+    const skillsDir = plugin.skills.replace(/\/$/, "");
+    const entries = validateConfig(await readJson("skills.config.json"));
+    const onDisk = await readdir(path.join(repoRoot, skillsDir), { withFileTypes: true });
+
+    const original = onDisk
+      .filter((item) => item.isDirectory())
+      .map((item) => `${skillsDir}/${item.name}`)
+      .filter((dir) => !entries.some((entry) => entry.targetPath.startsWith(dir)));
+
+    for (const dir of original) {
+      for (const entry of entries) {
+        assert.ok(
+          !dir.startsWith(`${entry.targetPath}/`),
+          `${dir} is hand-written but sits inside vendored target ${entry.targetPath}`,
+        );
+      }
+    }
+    assert.ok(original.length > 0, "expected at least one hand-written skill");
   });
 });

@@ -7,6 +7,6 @@
   },
   "scripts": {
     "fetch-skills": "node scripts/fetch-skills.mjs",
-    "test": "node --test"
+    "test": "node --test \"scripts/**/*.test.mjs\""
   }
 }

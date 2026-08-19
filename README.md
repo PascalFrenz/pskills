@@ -3,9 +3,23 @@
 A collection of skills that I use on a day-to-day basis, packaged as a
 [GitHub Copilot plugin](https://docs.github.com/en/copilot/concepts/agents/about-plugins).
 
-Skills under `skills/` are **vendored** from upstream repositories. They are not
-edited in place: `skills.config.json` records where each one comes from, and
-`scripts/fetch-skills.mjs` re-fetches them.
+Skills under `skills/` come from two places:
+
+- **Original** — written here, edited here, the source of truth. Not listed in
+  `skills.config.json`.
+- **Vendored** — copied from upstream repositories and never edited in place.
+  `skills.config.json` records where each one comes from, and
+  `scripts/fetch-skills.mjs` re-fetches them.
+
+| Skill | Origin |
+| --- | --- |
+| [`iterative-diagram`](skills/iterative-diagram/SKILL.md) | original |
+| everything else | vendored, see `skills.config.json` |
+
+Adding an original skill is just a new `skills/<name>/SKILL.md`; leave it out of
+the config and the fetcher will not touch it. `npm test` fails if a config entry
+ever grows to cover an original skill, because a vendored directory target
+deletes anything it does not own.
 
 ## Installing the plugin
 
