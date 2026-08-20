@@ -191,16 +191,28 @@ describe("validateConfig", () => {
 });
 
 describe("plugin manifest", () => {
-  it("declares the same version in plugin.json and marketplace.json", async () => {
+  it("keeps the Codex and Copilot plugin identities aligned", async () => {
     const plugin = await readJson("plugin.json");
+    const codexPlugin = await readJson(".codex-plugin/plugin.json");
     const marketplace = await readJson(".github/plugin/marketplace.json");
     const listed = marketplace.plugins.find((entry) => entry.name === plugin.name);
 
     assert.ok(listed, `marketplace.json does not list the plugin "${plugin.name}"`);
+    assert.equal(codexPlugin.name, plugin.name, "keep both plugin names aligned");
     assert.equal(
       listed.version,
       plugin.version,
       "bump the version in plugin.json and marketplace.json together",
+    );
+    assert.equal(
+      codexPlugin.version,
+      plugin.version,
+      "bump the version in both plugin manifests together",
+    );
+    assert.equal(
+      codexPlugin.skills.replace(/^\.\//, ""),
+      plugin.skills,
+      "both plugin manifests must package the same skills directory",
     );
   });
 

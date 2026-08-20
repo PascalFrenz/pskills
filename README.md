@@ -1,7 +1,8 @@
 # pskills
 
-A collection of skills that I use on a day-to-day basis, packaged as a
-[GitHub Copilot plugin](https://docs.github.com/en/copilot/concepts/agents/about-plugins).
+A collection of skills that I use on a day-to-day basis, packaged as both a
+[GitHub Copilot plugin](https://docs.github.com/en/copilot/concepts/agents/about-plugins)
+and an [OpenAI plugin for Codex](https://developers.openai.com/plugins/build/plugins).
 
 Skills under `skills/` come from two places:
 
@@ -11,17 +12,17 @@ Skills under `skills/` come from two places:
   `skills.config.json` records where each one comes from, and
   `scripts/fetch-skills.mjs` re-fetches them.
 
-| Skill | Origin |
-| --- | --- |
-| [`iterative-diagram`](skills/iterative-diagram/SKILL.md) | original |
-| everything else | vendored, see `skills.config.json` |
+| Skill                                                    | Origin                             |
+|----------------------------------------------------------|------------------------------------|
+| [`iterative-diagram`](skills/iterative-diagram/SKILL.md) | original                           |
+| everything else                                          | vendored, see `skills.config.json` |
 
 Adding an original skill is just a new `skills/<name>/SKILL.md`; leave it out of
 the config and the fetcher will not touch it. `npm test` fails if a config entry
 ever grows to cover an original skill, because a vendored directory target
 deletes anything it does not own.
 
-## Installing the plugin
+## Installing with GitHub Copilot
 
 ```shell
 copilot plugin marketplace add PascalFrenz/pskills
@@ -58,14 +59,15 @@ Update with `copilot plugin update pskills`, remove with
 
 ### Plugin layout
 
-| File | Purpose |
-| --- | --- |
-| `plugin.json` | plugin manifest at the repo root; points `skills` at `skills/` |
-| `.github/plugin/marketplace.json` | marketplace `pascalfrenz`, listing this repo (`source: "."`) as the `pskills` plugin |
+| File                              | Purpose                                                                                             |
+|-----------------------------------|-----------------------------------------------------------------------------------------------------|
+| `plugin.json`                     | GitHub Copilot plugin manifest at the repo root; points `skills` at `skills/`                       |
+| `.github/plugin/marketplace.json` | GitHub Copilot marketplace `pascalfrenz`, listing this repo (`source: "."`) as the `pskills` plugin |
+| `.codex-plugin/plugin.json`       | OpenAI plugin manifest for Codex; reuses the same `skills/` directory                               |
 
 The repository is both the marketplace and the plugin, so one `marketplace add`
-exposes it. Bump `version` in **both** manifests together — `npm test` fails if
-they drift.
+exposes it to Copilot. Bump `version` in both plugin manifests and the Copilot
+marketplace together. `npm test` fails if they drift.
 
 ## Updating the vendored skills
 
@@ -75,12 +77,12 @@ npm run fetch-skills -- --dry-run
 npm run fetch-skills -- --filter code-review
 ```
 
-| Flag | Effect |
-| --- | --- |
-| `--config <path>` | config file, default `skills.config.json` |
+| Flag                | Effect                                               |
+|---------------------|------------------------------------------------------|
+| `--config <path>`   | config file, default `skills.config.json`            |
 | `--filter <substr>` | only entries whose `sourceUrl` or `targetPath` match |
-| `--dry-run` | resolve and report without writing |
-| `--verbose` | also report entries with no changes |
+| `--dry-run`         | resolve and report without writing                   |
+| `--verbose`         | also report entries with no changes                  |
 
 Exit code is `1` if any entry failed. No dependencies; needs Node >= 20.
 
@@ -103,12 +105,12 @@ Exit code is `1` if any entry failed. No dependencies; needs Node >= 20.
 
 **`sourceUrl`**
 
-| Form | Fetches |
-| --- | --- |
-| `https://github.com/{owner}/{repo}/tree/{ref}/{path}` | the directory, recursively |
-| `https://github.com/{owner}/{repo}/blob/{ref}/{path}` | one file |
-| `https://raw.githubusercontent.com/{owner}/{repo}/{ref}/{path}` | one file |
-| any other `https://` URL | one file |
+| Form                                                            | Fetches                    |
+|-----------------------------------------------------------------|----------------------------|
+| `https://github.com/{owner}/{repo}/tree/{ref}/{path}`           | the directory, recursively |
+| `https://github.com/{owner}/{repo}/blob/{ref}/{path}`           | one file                   |
+| `https://raw.githubusercontent.com/{owner}/{repo}/{ref}/{path}` | one file                   |
+| any other `https://` URL                                        | one file                   |
 
 Directory expansion is GitHub-only. `{ref}` may contain slashes
 (`release/1.0`) or be a full commit SHA; the ref is resolved against the remote

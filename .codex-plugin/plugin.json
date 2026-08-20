@@ -1,0 +1,33 @@
+{
+  "name": "pskills",
+  "version": "0.1.0",
+  "description": "Curated agent skills for backend engineering: debugging prod incidents, reviewing diffs, sharpening a domain model, and writing docs an agent can follow. Vendored from upstream skill repositories.",
+  "author": {
+    "name": "Pascal Frenz",
+    "url": "https://github.com/PascalFrenz"
+  },
+  "homepage": "https://github.com/PascalFrenz/pskills",
+  "repository": "https://github.com/PascalFrenz/pskills",
+  "keywords": [
+    "debugging",
+    "code-review",
+    "domain-modeling",
+    "technical-writing",
+    "backend"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "pskills",
+    "shortDescription": "Backend engineering workflows for Codex.",
+    "longDescription": "A curated set of skills for debugging production incidents, reviewing code, designing domain models, and writing technical documentation.",
+    "developerName": "Pascal Frenz",
+    "category": "Developer Tools",
+    "capabilities": [],
+    "websiteURL": "https://github.com/PascalFrenz/pskills",
+    "defaultPrompt": [
+      "Diagnose a hard backend bug.",
+      "Review a diff for standards and spec.",
+      "Sharpen this domain model."
+    ]
+  }
+}
