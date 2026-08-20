@@ -1,0 +1,21 @@
+{
+  "name": "pascalfrenz",
+  "interface": {
+    "displayName": "Pascal Frenz"
+  },
+  "plugins": [
+    {
+      "name": "pskills",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/PascalFrenz/pskills.git",
+        "ref": "master"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

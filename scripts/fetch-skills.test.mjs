@@ -194,10 +194,13 @@ describe("plugin manifest", () => {
   it("keeps the Codex and Copilot plugin identities aligned", async () => {
     const plugin = await readJson("plugin.json");
     const codexPlugin = await readJson(".codex-plugin/plugin.json");
+    const codexMarketplace = await readJson(".agents/plugins/marketplace.json");
     const marketplace = await readJson(".github/plugin/marketplace.json");
     const listed = marketplace.plugins.find((entry) => entry.name === plugin.name);
+    const codexListed = codexMarketplace.plugins.find((entry) => entry.name === plugin.name);
 
     assert.ok(listed, `marketplace.json does not list the plugin "${plugin.name}"`);
+    assert.ok(codexListed, `Codex marketplace does not list the plugin "${plugin.name}"`);
     assert.equal(codexPlugin.name, plugin.name, "keep both plugin names aligned");
     assert.equal(
       listed.version,
@@ -213,6 +216,15 @@ describe("plugin manifest", () => {
       codexPlugin.skills.replace(/^\.\//, ""),
       plugin.skills,
       "both plugin manifests must package the same skills directory",
+    );
+    assert.deepEqual(
+      codexListed.source,
+      {
+        source: "url",
+        url: "https://github.com/PascalFrenz/pskills.git",
+        ref: "master",
+      },
+      "the Codex marketplace must install the plugin from the repository root",
     );
   });
 

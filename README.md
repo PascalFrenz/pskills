@@ -57,6 +57,26 @@ Update with `copilot plugin update pskills`, remove with
 > as deprecated: "Only plugin@marketplace installs will be supported in a future
 > release."
 
+## Installing with Codex
+
+Add this repository as a Codex marketplace, then install `pskills` from it:
+
+```shell
+codex plugin marketplace add PascalFrenz/pskills --ref master --sparse .agents/plugins
+codex plugin add pskills@pascalfrenz
+```
+
+In the Codex app's **Add plugin marketplace** dialog, use:
+
+| Field        | Value                                           |
+|--------------|-------------------------------------------------|
+| Source       | `https://github.com/PascalFrenz/pskills.git` |
+| Git ref      | `master`                                        |
+| Sparse paths | `.agents/plugins`                               |
+
+The sparse path selects the Codex marketplace manifest. `plugins/codex` is not
+a path in this repository.
+
 ### Plugin layout
 
 | File                              | Purpose                                                                                             |
@@ -64,6 +84,7 @@ Update with `copilot plugin update pskills`, remove with
 | `plugin.json`                     | GitHub Copilot plugin manifest at the repo root; points `skills` at `skills/`                       |
 | `.github/plugin/marketplace.json` | GitHub Copilot marketplace `pascalfrenz`, listing this repo (`source: "."`) as the `pskills` plugin |
 | `.codex-plugin/plugin.json`       | OpenAI plugin manifest for Codex; reuses the same `skills/` directory                               |
+| `.agents/plugins/marketplace.json` | Codex marketplace `pascalfrenz`; installs the plugin from this repository's root                   |
 
 The repository is both the marketplace and the plugin, so one `marketplace add`
 exposes it to Copilot. Bump `version` in both plugin manifests and the Copilot
