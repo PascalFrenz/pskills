@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="Example-driven development quality"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0">
+    <description>Production method readability checks maintained with the skill.</description>
+    <rule ref="category/java/design.xml/CyclomaticComplexity">
+        <properties>
+            <property name="methodReportLevel" value="10"/>
+        </properties>
+    </rule>
+    <rule ref="category/java/design.xml/NcssCount">
+        <properties>
+            <property name="methodReportLevel" value="30"/>
+        </properties>
+    </rule>
+</ruleset>

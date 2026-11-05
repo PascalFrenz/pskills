@@ -15,6 +15,7 @@ Skills under `skills/` come from two places:
 | Skill                                                    | Origin                             |
 |----------------------------------------------------------|------------------------------------|
 | [`iterative-diagram`](skills/iterative-diagram/SKILL.md) | original                           |
+| [`edd`](skills/edd/SKILL.md) | original; human-owned tests, agent implementation and review |
 | everything else                                          | vendored, see `skills.config.json` |
 
 Adding an original skill is just a new `skills/<name>/SKILL.md`; leave it out of
