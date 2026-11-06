@@ -16,10 +16,6 @@
     "targetPath": "skills/codebase-design"
   },
   {
-    "sourceUrl": "https://github.com/mattpocock/skills/tree/main/skills/engineering/resolving-merge-conflicts",
-    "targetPath": "skills/resolving-merge-conflicts"
-  },
-  {
     "sourceUrl": "https://github.com/mattpocock/skills/tree/main/skills/engineering/grill-with-docs",
     "targetPath": "skills/grill-with-docs"
   },
