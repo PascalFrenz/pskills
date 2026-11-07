@@ -6,13 +6,13 @@
   },
   "metadata": {
     "description": "Pascal Frenz's personal Copilot plugins",
-    "version": "1.1.0"
+    "version": "1.2.0"
   },
   "plugins": [
     {
       "name": "pskills",
       "description": "Curated agent skills for backend engineering: debugging prod incidents, reviewing diffs, sharpening a domain model, and writing docs an agent can follow. Vendored from upstream skill repositories.",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "source": ".",
       "author": {
         "name": "Pascal Frenz",
