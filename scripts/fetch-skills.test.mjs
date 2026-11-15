@@ -240,6 +240,14 @@ describe("plugin manifest", () => {
       "bump the version in plugin.json and .claude-plugin/marketplace.json together",
     );
     assert.equal(listed.source, "./", "the Claude Code plugin is the repository root");
+
+    const claudePlugin = await readJson(".claude-plugin/plugin.json");
+    assert.equal(claudePlugin.name, plugin.name, "keep the Claude Code plugin name aligned");
+    assert.equal(
+      claudePlugin.version,
+      plugin.version,
+      "bump the version in plugin.json and .claude-plugin/plugin.json together",
+    );
   });
 
   it("points the marketplace entry at the plugin manifest directory", async () => {
