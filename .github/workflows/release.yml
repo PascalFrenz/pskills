@@ -1,0 +1,42 @@
+name: release
+
+# Tags and releases the version that a merged PR wrote into the manifests.
+# Changes no files.
+on:
+  push:
+    branches: [master]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(node scripts/version.mjs current)
+          tag="v$version"
+          if ! git rev-parse -q --verify "refs/tags/$tag" >/dev/null; then
+            gh release create "$tag" --target "$GITHUB_SHA" --title "$tag" --generate-notes
+            exit 0
+          fi
+          subject=$(git log -1 --format=%s "$GITHUB_SHA")
+          type=$(node scripts/version.mjs release-type "$subject" 2>/dev/null || echo none)
+          if [ "$type" != none ]; then
+            echo "::error::\"$subject\" needs a $type release, but $tag already exists. Another PR probably took this version first: raise the manifests past $version with a fix: or feat: PR."
+            exit 1
+          fi
+          echo "$tag already released; \"$subject\" needs no release."
