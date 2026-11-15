@@ -1,0 +1,71 @@
+name: version-bump
+
+# Writes the next release version into every manifest on the PR branch. The
+# PR title decides the bump (feat: minor, fix/perf: patch, "!": major) because
+# it becomes the squash-merge commit; other types leave master's version.
+on:
+  pull_request:
+    branches: [master]
+    types: [opened, edited, reopened, synchronize]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: version-bump-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  bump:
+    # Pushing to a fork's branch needs that fork's permission.
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Bump manifests
+        id: bump
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          git fetch --no-tags origin master
+          base=$(git show origin/master:plugin.json | jq -r .version)
+          version=$(node scripts/version.mjs bump "$base" "$TITLE")
+          echo "Base $base, PR version $version"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      # master requires signed commits. GitHub signs commits made through its
+      # API, not ones pushed with git, so commit with createCommitOnBranch.
+      - name: Commit the bump
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.bump.outputs.version }}
+          BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: |
+          if git diff --quiet; then
+            echo "Manifests already at $VERSION."
+            exit 0
+          fi
+          additions=$(git diff --name-only | while read -r file; do
+            jq -n --arg path "$file" --arg contents "$(base64 -w0 "$file")" \
+              '{path: $path, contents: $contents}'
+          done | jq -s .)
+          jq -n \
+            --arg repo "$GITHUB_REPOSITORY" \
+            --arg branch "$BRANCH" \
+            --arg head "$(git rev-parse HEAD)" \
+            --arg headline "chore: set version to $VERSION" \
+            --argjson additions "$additions" \
+            '{
+              query: "mutation($input: CreateCommitOnBranchInput!) { createCommitOnBranch(input: $input) { commit { oid url } } }",
+              variables: {input: {
+                branch: {repositoryNameWithOwner: $repo, branchName: $branch},
+                expectedHeadOid: $head,
+                message: {headline: $headline},
+                fileChanges: {additions: $additions}
+              }}
+            }' | gh api graphql --input - --jq '.data.createCommitOnBranch.commit.url'
