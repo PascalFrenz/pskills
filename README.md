@@ -97,11 +97,23 @@ a path in this repository.
 | `.github/plugin/marketplace.json` | GitHub Copilot marketplace `pascalfrenz`, listing this repo (`source: "."`) as the `pskills` plugin |
 | `.codex-plugin/plugin.json`       | OpenAI plugin manifest for Codex; reuses the same `skills/` directory                               |
 | `.agents/plugins/marketplace.json` | Codex marketplace `pascalfrenz`; installs the plugin from this repository's root                   |
+| `.claude-plugin/plugin.json`      | Claude Code plugin manifest; Claude Code discovers skills in `skills/` itself                      |
 | `.claude-plugin/marketplace.json` | Claude Code marketplace `pascalfrenz`; lists this repo (`source: "./"`) as the `pskills` plugin, skills auto-discovered from `skills/` |
 
 The repository is both the marketplace and the plugin, so one `marketplace add`
-exposes it to Copilot. Bump `version` in both plugin manifests and the Copilot and
-Claude Code marketplaces together. `npm test` fails if they drift.
+exposes it to each client.
+
+### Releases
+
+Versions are bumped by [release-please](https://github.com/googleapis/release-please)
+(`.github/workflows/release-please.yml`). Every push to `master` updates a
+release PR from the [Conventional Commits](https://www.conventionalcommits.org/)
+since the last release: `fix:` bumps the patch, `feat:` the minor, and `feat!:`
+or a `BREAKING CHANGE:` footer the major version. Merging that PR writes the new
+version into every manifest listed in `release-please-config.json`, updates
+`CHANGELOG.md` and `version.txt`, and creates the `vX.Y.Z` tag and GitHub
+release. Do not edit version numbers by hand; `npm test` fails if a manifest's
+version field is missing from the config or drifts from the released version.
 
 ## Updating the vendored skills
 
