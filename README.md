@@ -114,8 +114,9 @@ nothing. Use `fix:` or `feat:` for a skill refresh that users should receive.
 
 - `.github/workflows/version-bump.yml` runs on every PR update and title edit.
   It raises `master`'s version by the title's bump and commits it to the PR
-  branch as `chore: set version to X.Y.Z [skip ci]`. Pull before pushing
-  again.
+  branch as `chore: set version to X.Y.Z`. Pull before pushing again.
+  GitHub holds the run that this bot push triggers for approval; leave it
+  unapproved, it has nothing left to bump.
 - `.github/workflows/release.yml` runs on every push to `master`. If the
   manifests hold a version with no tag yet, it creates the `vX.Y.Z` tag and a
   GitHub release with generated notes. It changes no files.
