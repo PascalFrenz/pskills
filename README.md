@@ -105,15 +105,28 @@ exposes it to each client.
 
 ### Releases
 
-Versions are bumped by [release-please](https://github.com/googleapis/release-please)
-(`.github/workflows/release-please.yml`). Every push to `master` updates a
-release PR from the [Conventional Commits](https://www.conventionalcommits.org/)
-since the last release: `fix:` bumps the patch, `feat:` the minor, and `feat!:`
-or a `BREAKING CHANGE:` footer the major version. Merging that PR writes the new
-version into every manifest listed in `release-please-config.json`, updates
-`CHANGELOG.md` and `version.txt`, and creates the `vX.Y.Z` tag and GitHub
-release. Do not edit version numbers by hand; `npm test` fails if a manifest's
-version field is missing from the config or drifts from the released version.
+Every change goes through a pull request that is squash-merged, and the PR
+title must follow [Conventional Commits](https://www.conventionalcommits.org/).
+The title decides the release: `feat:` bumps the minor version, `fix:` and
+`perf:` the patch, a `!` after the type (`feat!:`) the major, and `chore:`,
+`ci:`, `docs:`, `refactor:`, `test:`, `build:`, `style:` and `revert:` release
+nothing. Use `fix:` or `feat:` for a skill refresh that users should receive.
+
+- `.github/workflows/version-bump.yml` runs on every PR update and title edit.
+  It raises `master`'s version by the title's bump and commits it to the PR
+  branch as `chore: set version to X.Y.Z`. Pull before pushing again.
+- `.github/workflows/release.yml` runs on every push to `master`. If the
+  manifests hold a version with no tag yet, it creates the `vX.Y.Z` tag and a
+  GitHub release with generated notes. It changes no files.
+
+`scripts/version.mjs` lists every manifest field that holds the version; do not
+edit version numbers by hand. `npm test` fails if a manifest gains a version
+field that the list misses, or if the manifests disagree.
+
+If two open PRs get the same version, the one merged second fails the release
+workflow because its tag exists. Requiring branches to be up to date before
+merging avoids that: updating the branch re-runs the bump against the new
+`master`.
 
 ## Updating the vendored skills
 
