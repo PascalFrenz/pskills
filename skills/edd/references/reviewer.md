@@ -8,7 +8,7 @@ Look for hardcoded examples, fake implementations, regressions, behavior the exa
 
 Return one of:
 
-- `ACCEPT`: tests and quality checks succeeded, with commands and report paths; no outstanding findings.
+- `ACCEPT`: tests and quality checks succeeded, with commands and captured output; no outstanding findings.
 - `IMPLEMENTATION_DEFECT`: reproducible evidence, affected location, and the behavior or quality criterion to repair. Route directly to the implementer.
 - `CONTRACT_QUESTION`: a missing or ambiguous behavior, proposed Given/When/Then example, and the decision needed from the human. Label any suggested expected result as a proposal.
 

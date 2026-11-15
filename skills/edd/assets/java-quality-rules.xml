@@ -7,6 +7,11 @@
             <property name="methodReportLevel" value="10"/>
         </properties>
     </rule>
+    <rule ref="category/java/design.xml/CognitiveComplexity">
+        <properties>
+            <property name="reportLevel" value="15"/>
+        </properties>
+    </rule>
     <rule ref="category/java/design.xml/NcssCount">
         <properties>
             <property name="methodReportLevel" value="30"/>

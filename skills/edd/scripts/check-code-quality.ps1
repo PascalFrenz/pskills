@@ -30,25 +30,23 @@ try {
     $output = Join-Path ([IO.Path]::GetTempPath()) ('example-driven-pmd-' + [guid]::NewGuid())
     New-Item -ItemType Directory -Path $output | Out-Null
     $fileList = Join-Path $output 'sources.txt'
-    $report = Join-Path $output 'report.json'
     $files | Set-Content -LiteralPath $fileList -Encoding utf8
     $rules = (Resolve-Path -LiteralPath $Ruleset).Path
     $arguments = @('check', '--file-list', $fileList, '--rulesets', $rules,
-        '--format', 'json', '--report-file', $report, '--no-cache', '--no-progress',
+        '--format', 'json', '--no-cache', '--no-progress',
         '--show-suppressed', '--fail-on-error', '--fail-on-violation')
     if ($LanguageVersion) { $arguments += @('--use-version', $LanguageVersion) }
-    Write-Host "PMD: $version"
-    Write-Host "Sources: $($files.Count); report: $report"
-    & $command.Source @arguments
+    [Console]::Error.WriteLine("PMD: $version")
+    [Console]::Error.WriteLine("Sources: $($files.Count)")
+    $report = (& $command.Source @arguments | Out-String)
     $result = $LASTEXITCODE
-    if ($result -notin @(0, 4)) { throw "PMD analysis failed (exit $result). Report, if available: $report" }
-    if (-not (Test-Path -LiteralPath $report)) { throw 'PMD produced no report.' }
-    $data = Get-Content -LiteralPath $report -Raw | ConvertFrom-Json
-    if ($null -eq $data -or 'files' -notin $data.PSObject.Properties.Name) { throw 'Invalid PMD report.' }
+    Write-Output $report
+    if ($result -notin @(0, 4)) { throw "PMD analysis failed (exit $result)." }
+    $data = $report | ConvertFrom-Json
+    if ($null -eq $data -or $data.files -isnot [array]) { throw 'Invalid PMD report.' }
     if (@($data.processingErrors).Count -gt 0 -or @($data.configurationErrors).Count -gt 0) {
-        throw "PMD report contains analysis errors: $report"
+        throw 'PMD report contains analysis errors.'
     }
-    Write-Host "Review suppressed violations as well as ordinary findings in $report"
     exit $result
 } catch {
     Write-Error $_ -ErrorAction Continue

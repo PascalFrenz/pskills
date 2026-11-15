@@ -29,14 +29,14 @@ bash /path/to/skill/scripts/check-code-quality.sh \
 
 For another supported language, supply its skill-owned ruleset and matching source-file pattern. PowerShell accepts `-Ruleset`, `-FilePattern`, and optional `-LanguageVersion` in PMD's `language-version` syntax. Bash uses `PMD_RULESET`, `PMD_FILE_PATTERN`, and optional `PMD_LANGUAGE_VERSION` environment variables. Only Java rules are bundled currently; these options do not supply missing language rules.
 
-Both runners print a source count and JSON report path in temporary storage. They call `pmd check` with the selected ruleset, no cache, and suppressed findings included. They do not install tools or modify the project. Exit `0` means no unsuppressed violations, `4` means violations, and `2` means analysis did not complete. Missing tools, empty input, invalid reports, and parsing errors are incomplete checks.
+Both runners print the JSON report to stdout without saving a report file. PMD version, source count, and diagnostics go to stderr. They call `pmd check` with the selected ruleset, no cache, and suppressed findings included. They do not install tools or modify the project. Exit `0` means no unsuppressed violations, `4` means violations, and `2` means analysis did not complete. Missing tools, empty input, invalid reports, and parsing errors are incomplete checks.
 
 ## Review findings
 
-Capture a baseline before implementation and retain its report path in coordinator context. Use the same source scope, ruleset, language settings, and PMD version for subsequent checks. Match findings by file, enclosing method/class, and rule rather than line number alone; inspect moved code when correspondence is ambiguous.
+Capture a baseline before implementation and retain its output in coordinator context. Use the same source scope, ruleset, language settings, and PMD version for subsequent checks. Match findings by file, enclosing method/class, and rule rather than line number alone; inspect moved code when correspondence is ambiguous.
 
 Resolve newly introduced findings and avoid worsening existing ones. Address pre-existing findings in modified code within feature scope; return scope tradeoffs to the coordinator. Unrelated legacy findings do not require a cleanup campaign. The runners do not subtract the baseline or decide scope.
 
 Inspect the report, including suppressed findings, before declaring success. Confirm that the source inventory and selected rules cover the intended code. Workers must not introduce suppressions or weaken rules to bypass findings. Refactor for meaningful responsibilities and readability, then rerun after the last change. The reviewer runs the same checks independently.
 
-For rules requiring dependency/type resolution, consult the [PMD CLI reference](https://pmd.github.io/pmd/pmd_userdocs_cli_reference.html) and supply the necessary analysis inputs directly to `pmd check`. Keep reports outside the project and preserve the selected rules and failure handling.
+For rules requiring dependency/type resolution, consult the [PMD CLI reference](https://pmd.github.io/pmd/pmd_userdocs_cli_reference.html) and supply the necessary analysis inputs directly to `pmd check`. Preserve stdout reporting, the selected rules, and failure handling.

@@ -8,4 +8,4 @@ Run the project's relevant feature and regression tests. Use [code-quality.md](c
 
 Extract meaningful responsibilities, not arbitrary fragments designed only to lower a metric. Supplemental implementation tests, if useful, must return through the designer so the human retains ownership of tests.
 
-Return changed production paths, actual commands and outcomes, code quality report location, and any unresolved questions. A missing tool, failed analysis, or skipped test prevents completion.
+Return changed production paths, actual commands and outcomes, code quality findings from stdout, and any unresolved questions. A missing tool, failed analysis, or skipped test prevents completion.

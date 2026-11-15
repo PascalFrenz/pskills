@@ -17,7 +17,7 @@ Act as coordinator. Keep the conversation with the human; delegate work to subag
 
 ## Implement and review
 
-1. Read [code-quality.md](references/code-quality.md). Keep reports in temporary storage.
+1. Read [code-quality.md](references/code-quality.md). Capture check output in coordinator context.
 2. Dispatch an implementer with [implementer.md](references/implementer.md), the relevant test paths, and any concrete unresolved findings.
 3. Dispatch a fresh reviewer with [reviewer.md](references/reviewer.md). Have it inspect the workspace and form its own assessment before considering the implementer's explanation.
 4. Route implementation defects back to a fresh implementer. Route behavioral questions to the human and test designer as proposed Given/When/Then examples. Return to implementation when the human says to proceed.

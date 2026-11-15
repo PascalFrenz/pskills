@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# PMD must already be on PATH. Reports remain in temporary storage.
+# PMD must already be on PATH.
 set -euo pipefail
 trap 'exit 2' ERR
 fail() { printf '%s\n' "$*" >&2; exit 2; }
@@ -14,7 +14,6 @@ pattern=${PMD_FILE_PATTERN:-'*.java'}
 [[ -f "$rules" ]] || fail "Ruleset not found: $rules"
 output=$(mktemp -d "${TMPDIR:-/tmp}/edd-pmd.XXXXXXXX")
 file_list=$output/sources.txt
-report=$output/report.json
 python3 - "$file_list" "$pattern" "$@" <<'PY'
 import fnmatch
 import os
@@ -42,28 +41,27 @@ for root in roots:
 if not files:
     raise SystemExit('No matching source files found')
 pathlib.Path(destination).write_text('\n'.join(sorted(files)) + '\n', encoding='utf-8')
-print(f'Sources: {len(files)}')
+print(f'Sources: {len(files)}', file=sys.stderr)
 PY
 args=(check --file-list "$file_list" --rulesets "$rules" --format json
-    --report-file "$report" --no-cache --no-progress --show-suppressed
+    --no-cache --no-progress --show-suppressed
     --fail-on-error --fail-on-violation)
 if [[ -n ${PMD_LANGUAGE_VERSION:-} ]]; then
     args+=(--use-version "$PMD_LANGUAGE_VERSION")
 fi
-printf 'PMD: %s\nReport: %s\n' "$version" "$report"
+printf 'PMD: %s\n' "$version" >&2
 result=0
-pmd "${args[@]}" || result=$?
-[[ $result == 0 || $result == 4 ]] || fail "PMD analysis failed (exit $result). Report, if available: $report"
-python3 - "$report" <<'PY'
+report=$(pmd "${args[@]}") || result=$?
+printf '%s\n' "$report"
+[[ $result == 0 || $result == 4 ]] || fail "PMD analysis failed (exit $result)."
+python3 -c '
 import json
-import pathlib
 import sys
 
-data = json.loads(pathlib.Path(sys.argv[1]).read_text(encoding='utf-8'))
-if not isinstance(data, dict) or not isinstance(data.get('files'), list):
-    raise SystemExit('Invalid PMD report')
-if data.get('processingErrors') or data.get('configurationErrors'):
-    raise SystemExit('PMD report contains analysis errors')
-PY
-printf 'Review suppressed violations as well as ordinary findings in %s\n' "$report"
+data = json.load(sys.stdin)
+if not isinstance(data, dict) or not isinstance(data.get("files"), list):
+    raise SystemExit("Invalid PMD report")
+if data.get("processingErrors") or data.get("configurationErrors"):
+    raise SystemExit("PMD report contains analysis errors")
+' <<< "$report"
 exit "$result"
