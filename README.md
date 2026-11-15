@@ -58,6 +58,17 @@ Update with `copilot plugin update pskills`, remove with
 > as deprecated: "Only plugin@marketplace installs will be supported in a future
 > release."
 
+## Installing with Claude Code
+
+```shell
+claude plugin marketplace add PascalFrenz/pskills
+claude plugin install pskills@pascalfrenz
+```
+
+Update with `claude plugin marketplace update pascalfrenz` followed by
+`claude plugin update pskills@pascalfrenz`, remove with
+`claude plugin uninstall pskills@pascalfrenz`.
+
 ## Installing with Codex
 
 Add this repository as a Codex marketplace, then install `pskills` from it:
@@ -86,10 +97,11 @@ a path in this repository.
 | `.github/plugin/marketplace.json` | GitHub Copilot marketplace `pascalfrenz`, listing this repo (`source: "."`) as the `pskills` plugin |
 | `.codex-plugin/plugin.json`       | OpenAI plugin manifest for Codex; reuses the same `skills/` directory                               |
 | `.agents/plugins/marketplace.json` | Codex marketplace `pascalfrenz`; installs the plugin from this repository's root                   |
+| `.claude-plugin/marketplace.json` | Claude Code marketplace `pascalfrenz`; lists this repo (`source: "./"`) as the `pskills` plugin, skills auto-discovered from `skills/` |
 
 The repository is both the marketplace and the plugin, so one `marketplace add`
-exposes it to Copilot. Bump `version` in both plugin manifests and the Copilot
-marketplace together. `npm test` fails if they drift.
+exposes it to Copilot. Bump `version` in both plugin manifests and the Copilot and
+Claude Code marketplaces together. `npm test` fails if they drift.
 
 ## Updating the vendored skills
 

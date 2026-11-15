@@ -228,6 +228,20 @@ describe("plugin manifest", () => {
     );
   });
 
+  it("lists the plugin in the Claude Code marketplace at the same version", async () => {
+    const plugin = await readJson("plugin.json");
+    const claudeMarketplace = await readJson(".claude-plugin/marketplace.json");
+    const listed = claudeMarketplace.plugins.find((entry) => entry.name === plugin.name);
+
+    assert.ok(listed, `Claude Code marketplace does not list the plugin "${plugin.name}"`);
+    assert.equal(
+      listed.version,
+      plugin.version,
+      "bump the version in plugin.json and .claude-plugin/marketplace.json together",
+    );
+    assert.equal(listed.source, "./", "the Claude Code plugin is the repository root");
+  });
+
   it("points the marketplace entry at the plugin manifest directory", async () => {
     const marketplace = await readJson(".github/plugin/marketplace.json");
     const [listed] = marketplace.plugins;
