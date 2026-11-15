@@ -3,6 +3,8 @@ name: version-bump
 # Writes the next release version into every manifest on the PR branch. The
 # PR title decides the bump (feat: minor, fix/perf: patch, "!": major) because
 # it becomes the squash-merge commit; other types leave master's version.
+# The bump commit carries [skip ci]: GitHub would otherwise hold the run its
+# own push triggers for manual approval.
 on:
   pull_request:
     branches: [master]
@@ -49,5 +51,5 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -am "chore: set version to $VERSION"
+          git commit -am "chore: set version to $VERSION [skip ci]"
           git push origin "HEAD:$BRANCH"
