@@ -23,6 +23,24 @@ the config and the fetcher will not touch it. `npm test` fails if a config entry
 ever grows to cover an original skill, because a vendored directory target
 deletes anything it does not own.
 
+## Agents
+
+`agents/` holds custom agents (subagents) that some skills spawn by name, such
+as `poteto-agent` for `poteto-mode` and `comment-sicko` for `no-comments`. They
+are vendored the same way as skills, with one file entry per agent:
+
+```json
+{
+  "sourceUrl": "https://github.com/cursor/plugins/blob/main/pstack/agents/poteto-agent.md",
+  "targetPath": "agents/poteto-agent.agent.md"
+}
+```
+
+GitHub Copilot CLI loads only `*.agent.md` files from `agents/`, so the target
+renames the upstream file; Claude Code discovers any `*.md` in `agents/`.
+`npm test` fails if an agent entry is a directory or misses the `.agent.md`
+suffix. Codex plugins cannot ship agents, so Codex gets the skills only.
+
 ## Installing with GitHub Copilot
 
 ```shell
@@ -93,11 +111,11 @@ a path in this repository.
 
 | File                              | Purpose                                                                                             |
 |-----------------------------------|-----------------------------------------------------------------------------------------------------|
-| `plugin.json`                     | GitHub Copilot plugin manifest at the repo root; points `skills` at `skills/`                       |
+| `plugin.json`                     | GitHub Copilot plugin manifest at the repo root; points `skills` at `skills/` and `agents` at `agents/` |
 | `.github/plugin/marketplace.json` | GitHub Copilot marketplace `pascalfrenz`, listing this repo (`source: "."`) as the `pskills` plugin |
 | `.codex-plugin/plugin.json`       | OpenAI plugin manifest for Codex; reuses the same `skills/` directory                               |
 | `.agents/plugins/marketplace.json` | Codex marketplace `pascalfrenz`; installs the plugin from this repository's root                   |
-| `.claude-plugin/plugin.json`      | Claude Code plugin manifest; Claude Code discovers skills in `skills/` itself                      |
+| `.claude-plugin/plugin.json`      | Claude Code plugin manifest; Claude Code discovers skills in `skills/` and agents in `agents/` itself |
 | `.claude-plugin/marketplace.json` | Claude Code marketplace `pascalfrenz`; lists this repo (`source: "./"`) as the `pskills` plugin, skills auto-discovered from `skills/` |
 
 The repository is both the marketplace and the plugin, so one `marketplace add`

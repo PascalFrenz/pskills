@@ -256,15 +256,32 @@ describe("plugin manifest", () => {
     assert.equal(listed.source, ".", "plugin.json lives at the repo root");
   });
 
-  it("keeps every configured target inside the declared skills directory", async () => {
+  it("keeps every configured target inside the declared skills or agents directory", async () => {
     const plugin = await readJson("plugin.json");
     const entries = validateConfig(await readJson("skills.config.json"));
     const skillsDir = plugin.skills.replace(/\/$/, "");
+    const agentsDir = plugin.agents.replace(/\/$/, "");
 
     for (const entry of entries) {
       assert.ok(
-        entry.targetPath.startsWith(`${skillsDir}/`),
-        `${entry.targetPath} is outside ${skillsDir}/ and would not ship with the plugin`,
+        entry.targetPath.startsWith(`${skillsDir}/`) || entry.targetPath.startsWith(`${agentsDir}/`),
+        `${entry.targetPath} is outside ${skillsDir}/ and ${agentsDir}/ and would not ship with the plugin`,
+      );
+    }
+  });
+
+  it("vendors agents as single .agent.md files so Copilot CLI loads them", async () => {
+    const plugin = await readJson("plugin.json");
+    const entries = validateConfig(await readJson("skills.config.json"));
+    const agentsDir = plugin.agents.replace(/\/$/, "");
+    const agentEntries = entries.filter((entry) => entry.targetPath.startsWith(`${agentsDir}/`));
+
+    for (const entry of agentEntries) {
+      assert.equal(entry.source.kind, "file", `${entry.targetPath} must be a file entry, not a directory`);
+      assert.match(
+        entry.targetPath,
+        new RegExp(`^${agentsDir}/[^/]+\\.agent\\.md$`),
+        `${entry.targetPath} must be ${agentsDir}/<name>.agent.md`,
       );
     }
   });
