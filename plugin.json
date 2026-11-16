@@ -16,5 +16,6 @@
     "backend"
   ],
   "category": "engineering",
-  "skills": "skills/"
+  "skills": "skills/",
+  "agents": "agents/"
 }
