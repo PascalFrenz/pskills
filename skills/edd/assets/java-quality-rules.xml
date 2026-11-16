@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ruleset name="Example-driven development quality"
          xmlns="http://pmd.sourceforge.net/ruleset/2.0.0">
-    <description>Production method readability checks maintained with the skill.</description>
+    <description>Production readability checks maintained with the skill.</description>
+    <rule name="InlineComment"
+          language="java"
+          class="edd.pmd.InlineCommentRule"
+          message="Express this intent in names, types, or structure instead of an inline comment">
+        <description>Flags line and block comments. Javadoc is allowed.</description>
+        <priority>3</priority>
+    </rule>
     <rule ref="category/java/design.xml/CyclomaticComplexity">
         <properties>
             <property name="methodReportLevel" value="10"/>

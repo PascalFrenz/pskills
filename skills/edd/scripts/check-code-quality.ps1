@@ -32,6 +32,21 @@ try {
     $fileList = Join-Path $output 'sources.txt'
     $files | Set-Content -LiteralPath $fileList -Encoding utf8
     $rules = (Resolve-Path -LiteralPath $Ruleset).Path
+    if ((Get-Content -LiteralPath $rules -Raw) -match 'class="edd\.pmd\.') {
+        $javac = Get-Command javac -ErrorAction Stop
+        $launcher = Get-Item -LiteralPath $command.Source
+        $pmdHome = if ($env:PMD_HOME) { $env:PMD_HOME } else { Split-Path (Split-Path ($launcher.ResolvedTarget ?? $launcher.FullName)) }
+        $lib = Join-Path $pmdHome 'lib'
+        if (-not (Get-ChildItem -LiteralPath $lib -Filter 'pmd-java-*.jar' -ErrorAction SilentlyContinue)) {
+            throw "Cannot find PMD's lib directory under $pmdHome; set PMD_HOME to the PMD installation."
+        }
+        $classes = Join-Path $output 'rules'
+        $sources = @((Get-ChildItem -LiteralPath (Join-Path $PSScriptRoot '../assets/pmd-rules') -Filter '*.java').FullName)
+        & $javac.Source '-Xlint:-options' -source 8 -target 8 -cp (Join-Path $lib '*') -d $classes @sources 2>&1 |
+            ForEach-Object { [Console]::Error.WriteLine($_) }
+        if ($LASTEXITCODE -ne 0) { throw 'Cannot compile the skill-owned PMD rules.' }
+        $env:CLASSPATH = (@($classes, $env:CLASSPATH) | Where-Object { $_ }) -join [IO.Path]::PathSeparator
+    }
     $arguments = @('check', '--file-list', $fileList, '--rulesets', $rules,
         '--format', 'json', '--no-cache', '--no-progress',
         '--show-suppressed', '--fail-on-error', '--fail-on-violation')
