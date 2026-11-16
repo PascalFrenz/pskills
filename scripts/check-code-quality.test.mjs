@@ -29,6 +29,7 @@ const cases = [
   { name: "rejects malformed JSON", rawReport: "not JSON", pmdExit: 0, expectedExit: 2 },
   { name: "rejects missing output", rawReport: "", pmdExit: 0, expectedExit: 2 },
   { name: "prints PMD failure output before failing", report: findingsReport, pmdExit: 5, expectedExit: 2 },
+  { name: "fails when PMD's lib directory for the skill-owned rules is missing", defaultRuleset: true, report: cleanReport, pmdExit: 0, expectedExit: 2 },
 ];
 
 for (const runner of runners) {
@@ -40,6 +41,8 @@ for (const runner of runners) {
         context.after(() => rm(directory, { recursive: true, force: true }));
         const source = path.join(directory, "Booking.java");
         await writeFile(source, "class Booking {}\n");
+        const ruleset = path.join(directory, "stub-rules.xml");
+        await writeFile(ruleset, '<ruleset name="stub" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"/>\n');
         const stub = path.join(directory, "pmd-stub.mjs");
         await writeFile(stub, `
 import assert from "node:assert/strict";
@@ -74,8 +77,13 @@ process.exit(Number(process.env.PMD_TEST_EXIT));
           TMP: directory,
           TMPDIR: slashPath(directory),
         });
+        delete environment.PMD_HOME;
+        if (!scenario.defaultRuleset) {
+          environment.PMD_RULESET = slashPath(ruleset);
+        }
+        const rulesetArguments = scenario.defaultRuleset ? [] : ["-Ruleset", ruleset];
         const argumentsForProject = runner.name === "PowerShell"
-          ? ["-ProjectDirectory", directory, "-SourceDirectory", directory]
+          ? ["-ProjectDirectory", directory, "-SourceDirectory", directory, ...rulesetArguments]
           : [slashPath(directory), slashPath(directory)];
         const result = spawnSync(runner.command, [...runner.args, ...argumentsForProject], {
           env: environment,
@@ -84,6 +92,11 @@ process.exit(Number(process.env.PMD_TEST_EXIT));
         });
         assert.ifError(result.error);
         assert.equal(result.status, scenario.expectedExit, result.stderr);
+        if (scenario.defaultRuleset) {
+          assert.equal(result.stdout, "");
+          assert.match(result.stderr, /PMD_HOME|javac/);
+          return;
+        }
         assert.equal(result.stdout.trim(), rawReport);
         if (scenario.report) {
           assert.deepEqual(JSON.parse(result.stdout), scenario.report);

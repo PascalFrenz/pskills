@@ -1,6 +1,6 @@
 # Apply code quality checks
 
-Prerequisite: PMD 7 is available as `pmd` on PATH. Use the same PMD version for baseline and final checks. The shell runner requires Bash and Python 3; the PowerShell runner requires PowerShell 7.
+Prerequisite: PMD 7 is available as `pmd` on PATH. Use the same PMD version for baseline and final checks. The shell runner requires Bash and Python 3; the PowerShell runner requires PowerShell 7. The Java ruleset includes skill-owned rules from `assets/pmd-rules/`, which the runners compile with `javac` against PMD's `lib` directory; set `PMD_HOME` to the PMD installation if the runner cannot locate it from `pmd`.
 
 ## Select rules and sources
 
@@ -36,6 +36,8 @@ Both runners print the JSON report to stdout without saving a report file. PMD v
 Capture a baseline before implementation and retain its output in coordinator context. Use the same source scope, ruleset, language settings, and PMD version for subsequent checks. Match findings by file, enclosing method/class, and rule rather than line number alone; inspect moved code when correspondence is ambiguous.
 
 Resolve newly introduced findings and avoid worsening existing ones. Address pre-existing findings in modified code within feature scope; return scope tradeoffs to the coordinator. Unrelated legacy findings do not require a cleanup campaign. The runners do not subtract the baseline or decide scope.
+
+Production code written by agents carries intent in names, types, and method boundaries; Javadoc is the only comment form agents add. The Java ruleset's `InlineComment` rule flags every line and block comment. Inline comments in the baseline are human-written: leave them untouched, even in modified code. Resolve each new `InlineComment` finding by deleting the comment and moving its intent into the code or the Javadoc. A file header the project's build requires (for example, a license header) in a new file is the sole exception; report it rather than removing it.
 
 Inspect the report, including suppressed findings, before declaring success. Confirm that the source inventory and selected rules cover the intended code. Workers must not introduce suppressions or weaken rules to bypass findings. Refactor for meaningful responsibilities and readability, then rerun after the last change. The reviewer runs the same checks independently.
 

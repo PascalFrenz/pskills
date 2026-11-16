@@ -43,6 +43,15 @@ if not files:
 pathlib.Path(destination).write_text('\n'.join(sorted(files)) + '\n', encoding='utf-8')
 print(f'Sources: {len(files)}', file=sys.stderr)
 PY
+if grep -q 'class="edd\.pmd\.' "$rules"; then
+    command -v javac >/dev/null || fail 'javac is required to compile the skill-owned PMD rules.'
+    pmd_home=${PMD_HOME:-$(python3 -c 'import os, sys; print(os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[1]))))' "$(command -v pmd)")}
+    compgen -G "$pmd_home/lib/pmd-java-*.jar" >/dev/null || fail "Cannot find PMD's lib directory under $pmd_home; set PMD_HOME to the PMD installation."
+    classes=$output/rules
+    javac -Xlint:-options -source 8 -target 8 -cp "$pmd_home/lib/*" -d "$classes" "$script_dir"/../assets/pmd-rules/*.java >&2 \
+        || fail 'Cannot compile the skill-owned PMD rules.'
+    export CLASSPATH=$classes${CLASSPATH:+:$CLASSPATH}
+fi
 args=(check --file-list "$file_list" --rulesets "$rules" --format json
     --no-cache --no-progress --show-suppressed
     --fail-on-error --fail-on-violation)

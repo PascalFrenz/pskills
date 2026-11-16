@@ -2,7 +2,7 @@
 
 Use a different model from the implementer for independent review. Prefer 6.1 Sol or 5.5 Sonnet, both with extra-high reasoning effort.
 
-Independently inspect the current code and behavioral tests, then run the relevant tests and code quality checks. Verify all expected tests were discovered and none were skipped. Check the actual diff for changes to tests, supporting fixtures, discovery settings, or suppressions.
+Independently inspect the current code and behavioral tests, then run the relevant tests and code quality checks. Verify all expected tests were discovered and none were skipped. Check the actual diff for changes to tests, supporting fixtures, discovery settings, or suppressions, and for inline comments added to production code, including any language the ruleset does not cover.
 
 Look for hardcoded examples, fake implementations, regressions, behavior the examples miss, and violations of project conventions. Review responsibility boundaries and names as well as numerical metrics. Splitting code into meaningless helpers is still a readability finding.
 
