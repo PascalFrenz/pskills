@@ -40,35 +40,231 @@
     "targetPath": "skills/grilling"
   },
   {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/architect",
+    "targetPath": "skills/architect"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/arena",
+    "targetPath": "skills/arena"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/automate-me",
+    "targetPath": "skills/automate-me"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/benchmark-checklist",
+    "targetPath": "skills/benchmark-checklist"
+  },
+  {
     "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/blast-radius",
     "targetPath": "skills/blast-radius"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/bro",
+    "targetPath": "skills/bro"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/correct",
+    "targetPath": "skills/correct"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/create-formal-verification-skill",
+    "targetPath": "skills/create-formal-verification-skill"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/create-verification-skill",
+    "targetPath": "skills/create-verification-skill"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/figure-it-out",
+    "targetPath": "skills/figure-it-out"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/how",
+    "targetPath": "skills/how"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/in-your-own-words",
+    "targetPath": "skills/in-your-own-words"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/interrogate",
+    "targetPath": "skills/interrogate"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/ketchup",
+    "targetPath": "skills/ketchup"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/ketchup-video",
+    "targetPath": "skills/ketchup-video"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/maintain-formal-verification-skill",
+    "targetPath": "skills/maintain-formal-verification-skill"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/maintain-verification-skill",
+    "targetPath": "skills/maintain-verification-skill"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/make-bot-ui",
+    "targetPath": "skills/make-bot-ui"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/no-comments",
+    "targetPath": "skills/no-comments"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/poteto-help",
+    "targetPath": "skills/poteto-help"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/poteto-mode",
+    "targetPath": "skills/poteto-mode"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-attack-the-premise",
+    "targetPath": "skills/principle-attack-the-premise"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-boundary-discipline",
+    "targetPath": "skills/principle-boundary-discipline"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-build-the-lever",
+    "targetPath": "skills/principle-build-the-lever"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-encode-lessons-in-structure",
+    "targetPath": "skills/principle-encode-lessons-in-structure"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-exhaust-the-design-space",
+    "targetPath": "skills/principle-exhaust-the-design-space"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-experience-first",
+    "targetPath": "skills/principle-experience-first"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-explain-the-number",
+    "targetPath": "skills/principle-explain-the-number"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-fix-root-causes",
+    "targetPath": "skills/principle-fix-root-causes"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-foundational-thinking",
+    "targetPath": "skills/principle-foundational-thinking"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-guard-the-context-window",
+    "targetPath": "skills/principle-guard-the-context-window"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-laziness-protocol",
+    "targetPath": "skills/principle-laziness-protocol"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-make-operations-idempotent",
+    "targetPath": "skills/principle-make-operations-idempotent"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-migrate-callers-then-delete-legacy-apis",
+    "targetPath": "skills/principle-migrate-callers-then-delete-legacy-apis"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-minimize-reader-load",
+    "targetPath": "skills/principle-minimize-reader-load"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-model-the-domain",
+    "targetPath": "skills/principle-model-the-domain"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-never-block-on-the-human",
+    "targetPath": "skills/principle-never-block-on-the-human"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-outcome-oriented-execution",
+    "targetPath": "skills/principle-outcome-oriented-execution"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-prove-it-works",
+    "targetPath": "skills/principle-prove-it-works"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-redesign-from-first-principles",
+    "targetPath": "skills/principle-redesign-from-first-principles"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-separate-before-serializing-shared-state",
+    "targetPath": "skills/principle-separate-before-serializing-shared-state"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-sequence-verifiable-units",
+    "targetPath": "skills/principle-sequence-verifiable-units"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-subtract-before-you-add",
+    "targetPath": "skills/principle-subtract-before-you-add"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-test-behavior-not-implementation",
+    "targetPath": "skills/principle-test-behavior-not-implementation"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/principle-type-system-discipline",
+    "targetPath": "skills/principle-type-system-discipline"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/recall",
+    "targetPath": "skills/recall"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/reflect",
+    "targetPath": "skills/reflect"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/setup-pstack",
+    "targetPath": "skills/setup-pstack"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/sharpen",
+    "targetPath": "skills/sharpen"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/show-me-your-work",
+    "targetPath": "skills/show-me-your-work"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/statechart",
+    "targetPath": "skills/statechart"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/swarm",
+    "targetPath": "skills/swarm"
+  },
+  {
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/teach",
+    "targetPath": "skills/teach"
   },
   {
     "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/technical-writing",
     "targetPath": "skills/technical-writing"
   },
   {
-    "sourceUrl": "https://github.com/cursor/plugins/blob/main/pstack/skills/principle-fix-root-causes/SKILL.md",
-    "targetPath": "skills/principle-fix-root-causes/SKILL.md"
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/typescript-best-practices",
+    "targetPath": "skills/typescript-best-practices"
   },
   {
-    "sourceUrl": "https://github.com/cursor/plugins/blob/main/pstack/skills/principle-prove-it-works/SKILL.md",
-    "targetPath": "skills/principle-prove-it-works/SKILL.md"
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/unslop",
+    "targetPath": "skills/unslop"
   },
   {
-    "sourceUrl": "https://github.com/cursor/plugins/blob/main/pstack/skills/unslop/SKILL.md",
-    "targetPath": "skills/unslop/SKILL.md"
-  },
-  {
-    "sourceUrl": "https://github.com/cursor/plugins/blob/main/pstack/skills/why/SKILL.md",
-    "targetPath": "skills/why/SKILL.md"
-  },
-  {
-    "sourceUrl": "https://github.com/cursor/plugins/blob/main/pstack/skills/how/SKILL.md",
-    "targetPath": "skills/how/SKILL.md"
-  },
-  {
-    "sourceUrl": "https://github.com/cursor/plugins/blob/main/pstack/skills/teach/SKILL.md",
-    "targetPath": "skills/teach/SKILL.md"
+    "sourceUrl": "https://github.com/cursor/plugins/tree/main/pstack/skills/why",
+    "targetPath": "skills/why"
   }
 ]
