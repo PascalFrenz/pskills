@@ -1,0 +1,6 @@
+{
+  "CyclomaticComplexity": { "reportLevel": 10 },
+  "CognitiveComplexity": { "reportLevel": 15 },
+  "LogicalLines": { "reportLevel": 30 },
+  "InlineComment": {}
+}
